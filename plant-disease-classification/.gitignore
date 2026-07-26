@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Model artifacts (large binaries -- don't commit these)
+backend/train/checkpoints/*.pt
+backend/data/*.db
+backend/data/uploads/*
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# OS
+.DS_Store
