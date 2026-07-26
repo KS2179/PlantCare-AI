@@ -1,4 +1,4 @@
-# 🌿 Plant Disease Classification
+# 🌿 PlantCare AI
 
 An AI-powered web app that identifies plant leaf diseases from photos.
 Upload a leaf image, get a disease prediction with confidence, and see
