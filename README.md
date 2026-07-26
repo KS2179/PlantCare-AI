@@ -277,15 +277,7 @@ LinkedIn: https://linkedin.com/in/kumari-sonal-a13b49329
 
 # 📄 License
 
-This project is intended for educational and research purposes.
-
----
-
 # 🙏 Acknowledgements
+This project was built using several excellent open-source tools and resources.
 
-- PlantVillage Dataset
-- PyTorch
-- OpenCV
-- FastAPI
-- React
-- Docker
+
