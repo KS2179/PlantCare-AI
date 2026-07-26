@@ -1,0 +1,224 @@
+:root {
+  --green: #2e7d32;
+  --green-light: #e8f5e9;
+  --red: #c62828;
+  --red-light: #ffebee;
+  --gray: #616161;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f4f6f4;
+  color: #222;
+}
+
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+header h1 {
+  margin-bottom: 4px;
+}
+
+header p {
+  color: var(--gray);
+  margin-top: 0;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.drop-zone {
+  border: 2px dashed #a5d6a7;
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  background: white;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-img {
+  max-height: 260px;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+button {
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #a5d6a7;
+  cursor: not-allowed;
+}
+
+.error-banner {
+  background: var(--red-light);
+  color: var(--red);
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.result-card {
+  margin-top: 20px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 6px solid var(--gray);
+}
+
+.result-card.healthy {
+  border-left-color: var(--green);
+}
+
+.result-card.diseased {
+  border-left-color: var(--red);
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.confidence-badge {
+  background: var(--green-light);
+  color: var(--green);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.plant-name {
+  color: var(--gray);
+  margin-top: -4px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-block h4 {
+  margin-bottom: 4px;
+  color: var(--green);
+}
+
+.info-block p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.top-k {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--gray);
+}
+
+.right-panel {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-left: 4px solid var(--gray);
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.history-list li.healthy {
+  border-left-color: var(--green);
+}
+
+.history-list li.diseased {
+  border-left-color: var(--red);
+}
+
+.history-item-btn {
+  flex: 1;
+  background: none;
+  color: inherit;
+  text-align: left;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.history-disease {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.history-meta {
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.delete-btn {
+  background: none;
+  color: var(--gray);
+  font-size: 18px;
+  padding: 4px 10px;
+}
+
+.empty-state {
+  color: var(--gray);
+  font-size: 14px;
+}
