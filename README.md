@@ -281,5 +281,5 @@ This project is licensed under the **MIT License**.
 
 ---
 
-# 🙏 Acknowledgements
+#  Acknowledgements
 This project was built using several excellent open-source tools and resources.
