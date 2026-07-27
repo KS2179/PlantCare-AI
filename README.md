@@ -1,28 +1,28 @@
-# 🌿 PlantCare AI
+#  PlantCare AI
 
 An AI-powered web application for **plant disease classification** using deep learning and computer vision. Users can upload a leaf image to receive a disease prediction with a confidence score, along with detailed information about the disease including symptoms, causes, treatment, and prevention. Every prediction is stored in a SQLite database for future reference.
 
 ---
 
-## 🚀 Features
+##  Features
 
-- 🌱 Plant disease classification using Deep Learning
-- 📷 Upload plant leaf images for prediction
-- 🎯 Confidence score for every prediction
-- 📖 Disease information:
+- Plant disease classification using Deep Learning
+-  Upload plant leaf images for prediction
+-  Confidence score for every prediction
+-  Disease information:
   - Description
   - Symptoms
   - Causes
   - Treatment
   - Prevention
-- 📜 Prediction history stored using SQLite
-- ⚡ REST API built with FastAPI
-- 💻 Modern React + Vite frontend
-- 🐳 Docker support for containerized deployment
+-  Prediction history stored using SQLite
+-  REST API built with FastAPI
+-  Modern React + Vite frontend
+- Docker support for containerized deployment
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Category | Technologies |
 |----------|--------------|
@@ -36,7 +36,7 @@ An AI-powered web application for **plant disease classification** using deep le
 
 ---
 
-## 🎯 Motivation
+##  Motivation
 
 This project was developed to gain hands-on experience in building a complete computer vision application—from model training to deployment. It demonstrates:
 
@@ -51,7 +51,7 @@ The model is trained using the publicly available **PlantVillage** dataset.
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 ```text
 PlantCare-AI/
@@ -79,7 +79,7 @@ PlantCare-AI/
 
 ---
 
-# 🧠 Model Training
+# Model Training
 
 This repository does **not** include the trained model or PlantVillage dataset due to their large size.
 
@@ -121,7 +121,7 @@ train/checkpoints/
 
 ---
 
-## 📊 Model Evaluation
+##  Model Evaluation
 
 (Optional)
 
@@ -145,7 +145,7 @@ The evaluation script reports:
 
 ---
 
-# 💻 Running Locally
+#  Running Locally
 
 ## Backend
 
@@ -197,7 +197,7 @@ http://localhost:5173
 
 ---
 
-# 🐳 Docker
+#  Docker
 
 Run the complete application using Docker:
 
@@ -221,7 +221,7 @@ http://localhost:8000
 
 ---
 
-# 🧪 Running Tests
+#  Running Tests
 
 ```bash
 cd backend
@@ -245,7 +245,7 @@ pytest tests/ -v
 
 ---
 
-# 🏗️ Design Decisions
+#  Design Decisions
 
 ### Shared Model Factory
 
@@ -261,29 +261,8 @@ Disease descriptions are maintained separately in `disease_info.json`, allowing 
 
 ---
 
-# 🚀 Future Improvements
 
-- Add all PlantVillage disease classes
-- Grad-CAM visualization for explainable AI
-- User authentication
-- Cloud deployment
-- Mobile application
-- Confidence threshold for uncertain predictions
-- Support additional crop species
-
----
-
-# 📷 Screenshots
-
-> Add screenshots after completing the frontend.
-
-- Home Page
-- Prediction Result
-- Prediction History
-
----
-
-# 👩‍💻 Author
+#  Author
 
 **Kumari Sonal**
 
