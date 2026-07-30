@@ -81,7 +81,9 @@ PlantCare-AI/
 
 # Model Training
 
-This repository does **not** include the trained model checkpoint or the PlantVillage dataset itself due to their large size — you train the model yourself using the scripts in `backend/train/`.
+A trained checkpoint is included in this repository at `backend/train/checkpoints/best_model.pt` (ResNet50, 98% validation accuracy across 15 disease classes — see [Model Performance](#-model-performance) below), so you can run the app immediately without training anything yourself. The training dataset itself is **not** included due to its size — see below if you want to retrain from scratch or fine-tune further.
+
+**Quick start:** since the checkpoint is already committed, you can skip straight to [Running Locally](#-running-locally) or [Docker](#-docker) — the API will pick it up automatically on startup. The rest of this section only applies if you want to retrain the model yourself (e.g. on a different dataset, or to try a different architecture).
 
 ### 1. Get the dataset
 
@@ -117,8 +119,11 @@ pip install -r requirements.txt
 python train/train.py \
   --data-dir train/data \
   --arch resnet50 \
-  --epochs 15
+  --epochs 15 \
+  --output-dir train/checkpoints
 ```
+
+> ⚠️ **Always pass `--output-dir train/checkpoints` explicitly.** The flag defaults to a plain `checkpoints` folder *relative to wherever you run the command from* — if you run `train.py` from `backend/` (as shown above), the default landing spot is `backend/checkpoints/`, **not** `backend/train/checkpoints/` where `app/config.py` looks for the model by default. Passing the flag explicitly avoids that mismatch entirely.
 
 **What actually happens during training:**
 
@@ -249,12 +254,14 @@ Then embed it here:
 ![Confusion matrix](docs/confusion_matrix.png)
 ```
 
-**Sample predictions:** a small grid of 4–6 example leaf images with predicted class and confidence — including one of the Target Spot misclassifications discussed above — makes this section far more convincing than tables alone:
+**Sample predictions:** these are real results from the running app (screenshots taken during testing):
 
-| Input | Predicted | Confidence | Actual |
-|-------|-----------|------------|--------|
-| ![sample](docs/samples/tomato_target_spot_1.jpg) | Tomato — Target Spot | 0.71 | Tomato — Early Blight |
-| ![sample](docs/samples/potato_healthy_1.jpg) | Potato — healthy | 0.99 | Potato — healthy |
+| Input | Predicted | Confidence |
+|-------|-----------|------------|
+| Tomato leaf with dark circular spots (Septoria leaf spot) | Tomato Septoria Leaf Spot | 98.1% |
+| Wilted tomato foliage with brown lesions | Tomato Early Blight | 92.1% / 89.1% (two separate photos) |
+
+> To make this section complete, save the actual test images into a `docs/samples/` folder in the repo and reference them here with `![description](docs/samples/filename.jpg)` — that turns this from a text table into an actual visual proof the model works, which is worth more to a reviewer than the numbers alone.
 
 ---
 
@@ -373,6 +380,40 @@ OpenCV performs image decoding and light preprocessing (a bilateral filter for d
 ### Disease Knowledge Base
 
 Disease descriptions (symptoms, causes, prevention, treatment) are maintained separately in `disease_info.json`, keyed by class label, so the API can serve predictions even for classes that haven't been documented yet — it falls back to a generic response derived from the class name rather than failing.
+
+> **Note:** the lookup in `disease_info.py` is an exact string match against the model's class names (no normalization), so every key in `disease_info.json` must match the corresponding entry in `train/checkpoints/class_names.txt` **character for character** — including underscore count. If you retrain on a different dataset variant with different folder-naming conventions, double check the keys still line up, or predictions will silently fall back to the generic "no entry yet" message even though the disease was correctly identified.
+
+---
+
+#  Troubleshooting
+
+**"No trained model found at ..." on API startup**
+`app/config.py` looks for the checkpoint at `train/checkpoints/best_model.pt` by default. If you trained without passing `--output-dir train/checkpoints`, your checkpoint likely landed in a different folder (see the warning in the Model Training section above). Move `best_model.pt` and `class_names.txt` into `backend/train/checkpoints/` and restart the API.
+
+**Predictions work, but "Treatment" always says "No entry yet in the disease knowledge base"**
+This means the predicted class label isn't found as an exact key in `data/disease_info.json` — usually because the naming convention doesn't match `class_names.txt` (e.g. `Tomato_Early_blight` vs. `Tomato___Early_blight`). Check with:
+```bash
+type data\disease_info.json | findstr "YourClassNameHere"
+```
+If nothing matches, fix the key in `disease_info.json` to match `class_names.txt` exactly, then **restart the backend** — the file is loaded once at startup and cached (`@lru_cache`), so saving the file alone isn't enough.
+
+**Editing files on GitHub but changes don't show up locally**
+Editing a file through the GitHub website only updates the remote repository, not your local clone. Run `git pull` in your project folder to bring those changes down before restarting the backend.
+
+**`pip install -r requirements.txt` fails trying to build `pillow`/`pydantic-core` from source**
+This usually means pip is falling back to compiling an old pinned version because no prebuilt wheel matches your Python version. Install newer versions of just those two packages first, then install the rest without letting pip downgrade them:
+```bash
+pip install --upgrade pillow pydantic pydantic-core
+pip install -r requirements.txt --no-deps
+```
+
+**`torch.cuda.is_available()` returns `False` despite having an NVIDIA GPU**
+The default PyPI build of `torch` is CPU-only. Check your CUDA version with `nvidia-smi`, then reinstall from PyTorch's own index:
+```bash
+pip uninstall torch torchvision -y
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+```
+(use `cu118` instead of `cu124` if `nvidia-smi` reports CUDA 11.x)
 
 ---
 
