@@ -1,6 +1,6 @@
 # PlantCare AI
 
-Plant disease classification web app. Upload a leaf image, get a disease prediction with confidence score, symptoms, causes, treatment, and prevention. Predictions are logged to SQLite.
+An AI-powered web application for plant disease classification using deep learning and computer vision. Users can upload a leaf image to receive a disease prediction with a confidence score, along with detailed information about the disease including symptoms, causes, treatment, and prevention. Every prediction is stored in a SQLite database for future reference.
 
 ## Highlights
 
